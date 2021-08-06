@@ -6,6 +6,7 @@ const xlsxFile = require('read-excel-file/node');
 const XLSX = require('xlsx');
 import xlsx from 'node-xlsx';
 import axios from "axios";
+import { request } from "graphql-request";
 
 @Processor('file-upload-queue')
 export class UploadProcessor {
@@ -18,8 +19,11 @@ export class UploadProcessor {
     @Process('upload')
     async readOperationJob(job: Job<any>) {
         console.log("Job Received:  ", job.id);
+        let insertedStudents: Student[] = [];
 
-    await xlsxFile('./uploads/Data.xlsx').then((rows) => {
+        await xlsxFile('./uploads/Data.xlsx').then((rows) => {
+
+
             const columnNames = rows.shift(); // Separate first row with column names
             const objs = rows.map((row) => { // Map the rest of the rows into objects
                 const obj: any = {}; // Create object literal for current row
@@ -28,8 +32,8 @@ export class UploadProcessor {
                 });
                 // console.log(obj); // Display the array of objects on the console
                 // this.students.push(obj);
-                
-                
+
+
                 this.stud = {
                     id: obj.Id,
                     name: obj.Name,
@@ -46,20 +50,35 @@ export class UploadProcessor {
         this.students.forEach(student => {
             const mutation = `mutation CreateStudent($createStudent: StudentInput!){
                 createStudent(input: {student: $createStudent}){
-                clientMutationId
+                    student {
+                        id
+                        name
+                        age
+                        dob
+                      }
                 }
             }`
-   
-            const res = axios.post(this.endPoint, {
-                query: mutation,
-                variables: { createStudent: student }
-            }).then((response) => {
-                console.log(response.data);
+
+            // const res = axios.post(this.endPoint, {
+            //     query: mutation,
+            //     variables: { createStudent: student }
+            // }).then((response) => {
+            //     console.log(response.data);
+            // }, (error) => {
+            //     console.log(error);
+            // });
+            // return res;
+
+            return request(this.endPoint, mutation, {
+                createStudent: student
+            }).then((data) => {
+                insertedStudents.push(data.createStudent.student)
+                return data.createStudent.student;
             }, (error) => {
-                console.log(error);
+                () => error;
             });
-            return res;
-        })
+        }
+        );
         console.log('STUDENT  ARRAY')
     }
 
