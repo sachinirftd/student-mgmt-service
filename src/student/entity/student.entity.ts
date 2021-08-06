@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "@nestjs/graphql";
+import { Field, Int, ObjectType } from "@nestjs/graphql";
 
 @ObjectType() //used to specify what to be included in the schema
 export class Student {
@@ -7,7 +7,7 @@ export class Student {
     id: number;
     @Field()
     name: string;
-    @Field()
+    @Field((type) => Int, { nullable: true })
     age: number;
     @Field()
     dob: string;

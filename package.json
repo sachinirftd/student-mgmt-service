@@ -35,6 +35,7 @@
     "bull": "^3.27.0",
     "class-validator": "^0.13.1",
     "convert-excel-to-json": "^1.7.0",
+    "cors": "^2.8.5",
     "graphql": "^15.5.1",
     "graphql-request": "^3.5.0",
     "graphql-tools": "^8.0.0",

@@ -12,6 +12,10 @@ import { GraphQLUpload } from "graphql-upload";
 @Module({
   imports: [
     GraphQLModule.forRoot({
+      cors: {
+        origin: 'http://localhost:4200',
+        credentials: true,
+      },
       autoSchemaFile: join(process.cwd(), 'src/graphql-schema.gql'),
       uploads: false,
       context: req => ({ req }),

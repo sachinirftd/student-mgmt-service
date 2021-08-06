@@ -19,8 +19,8 @@ export class StudentResolver {
         return this.studentService.getAllStudents();
     }
 
-    @Mutation(() => Number) //bool denoted return type from the query
-    async updateStudent(@Args('updateStudentInput') updateStudentInput: UpdateStudentInput): Promise<number> {
+    @Mutation(() => Student) //bool denoted return type from the query
+    async updateStudent(@Args('updateStudentInput') updateStudentInput: UpdateStudentInput): Promise<Student> {
         return this.studentService.updateStudent(updateStudentInput);
     }
 

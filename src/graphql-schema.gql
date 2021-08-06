@@ -5,7 +5,7 @@
 type Student {
   id: Float!
   name: String!
-  age: Float!
+  age: Int
   dob: String!
   email: String!
 }
@@ -17,7 +17,7 @@ type Query {
 
 type Mutation {
   saveStudent(createStudentInput: CreateStudentInput!): Student!
-  updateStudent(updateStudentInput: UpdateStudentInput!): Float!
+  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
   deleteStudent(deleteStudentInput: DeleteStudentInput!): Float!
   uploadFile(file: Upload!): Boolean!
 }
@@ -39,7 +39,7 @@ input UpdateStudentInput {
   id: Float!
   name: String!
   age: Float!
-  dob: String!
+  dob: DateTime!
   email: String!
 }
 

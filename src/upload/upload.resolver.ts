@@ -3,7 +3,6 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Queue } from 'bull';
 import { createWriteStream } from 'fs';
 import { FileUpload, GraphQLUpload } from "graphql-upload";
-import { UploadService } from './upload.service';
 
 @Resolver('upload')
 export class UploadResolver {
@@ -21,7 +20,6 @@ export class UploadResolver {
             createReadStream()
                 .pipe(createWriteStream(`./uploads/${filename}`))
                 .on('finish', async () => {
-                    // this.uploadService.uploadFile(filename);
                     const job = await this.fileUploadQueue.add('upload', {
                         filename
                     });

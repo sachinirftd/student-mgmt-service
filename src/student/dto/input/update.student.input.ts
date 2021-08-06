@@ -11,7 +11,7 @@ export class UpdateStudentInput {
     @Field()
     age: number;
     @Field()
-    dob: string;
+    dob: Date;
     @Field()
     email: string;
 }
