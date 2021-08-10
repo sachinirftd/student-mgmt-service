@@ -56,8 +56,8 @@ export class StudentService {
                 dob
               }}}`
 
-    return request(this.endPoint, query).then((data) => {
-      return data.allStudents.nodes;
+    return await request(this.endPoint, query).then(async (data) => {
+      return await data.allStudents.nodes;
     });
   }
 
@@ -66,7 +66,7 @@ export class StudentService {
     updateStudent.age = this.calculateAge(updateStudent.dob);
     const mutation = gql`mutation UpdateStudentById($id: Int!, $updateStudent: StudentPatch!) {
             updateStudentById(input: { id: $id, studentPatch: $updateStudent }) {
-              __typename 
+              __typename
             }
           }`
 
@@ -74,6 +74,7 @@ export class StudentService {
       id: updateStudent.id,
       updateStudent: updateStudent
     }).then((data) => {
+      console.log(data, "DATA")
       return data.updateStudentById;
     });
   }

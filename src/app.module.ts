@@ -12,16 +12,16 @@ import { GraphQLUpload } from "graphql-upload";
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      cors: {
-        origin: 'http://localhost:4200',
-        credentials: true,
-      },
+      // cors: {
+      //   origin: 'http://localhost:4200',
+      //   credentials: true,
+      // },
       autoSchemaFile: join(process.cwd(), 'src/graphql-schema.gql'),
       uploads: false,
-      context: req => ({ req }),
-      resolvers: {
-        Upload: GraphQLUpload,
-      },
+      // context: req => ({ req }),
+      // resolvers: {
+      //   Upload: GraphQLUpload,
+      // },
     }),
     BullModule.forRoot({
       redis: {
