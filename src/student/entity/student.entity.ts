@@ -8,7 +8,7 @@ export class Student {
     @Field()
     name: string;
     @Field((type) => Int, { nullable: true })
-    age: number;
+    age?: number;
     @Field()
     dob: string;
     @Field()

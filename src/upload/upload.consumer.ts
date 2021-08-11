@@ -54,21 +54,20 @@ export class UploadConsumer {
        const returnResult = this.students.map(student => {
             const mutation = `mutation CreateStudent($createStudent: StudentInput!){
                 createStudent(input: {student: $createStudent}){
-                    student {
-                        id
-                        name
-                        age
-                        dob
-                      }
+             
+                      __typename
+                     
                 }
             }`
 
             return request(this.endPoint, mutation, {
                 createStudent: student
             }).then((data) => {
+              console.log(data, "DATA")
                 // insertedStudents.push(data.createStudent.student)
                 return true;
             }, (error) => {
+              console.log(error, "ERROR")
                 // () => error;
             });
         }

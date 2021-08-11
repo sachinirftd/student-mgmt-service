@@ -29,6 +29,7 @@
     "@nestjs/graphql": "^8.0.2",
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/platform-ws": "^8.0.5",
+    "@nestjs/typeorm": "^8.0.2",
     "@nestjs/websockets": "^8.0.5",
     "@types/socketcluster-client": "^15.1.5",
     "apollo-server-express": "^2.25.2",
@@ -48,7 +49,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "socketcluster-client": "^16.0.4",
-    "test": "^0.6.0"
+    "test": "^0.6.0",
+    "typeorm": "^0.2.36"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

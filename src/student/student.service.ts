@@ -1,8 +1,6 @@
 
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 import { request, gql } from 'graphql-request';
-import { identity } from 'rxjs';
 import { CreateStudentInput } from './dto/input/create.student.input';
 import { DeleteStudentInput } from './dto/input/delete.student.input';
 import { UpdateStudentInput } from './dto/input/update.student.input';
@@ -16,33 +14,18 @@ export class StudentService {
   async saveStudent(createStudent: CreateStudentInput): Promise<Student> {
 
     const mutation = `mutation CreateStudent($createStudent: StudentInput!) {
-            createStudent(input: { student: $createStudent }) {
-                  student {
-                id
-                name
-                age
-                dob
-              }
+            createStudent(input: { student: $createStudent }) { 
+                __typename      
             }
           }`
 
     return request(this.endPoint, mutation, {
       createStudent: createStudent
     }).then((data) => {
-      return data.createStudent.student;
+      return data;
     }, (error) => {
       console.log(error);
     });
-    //const res = axios.post(this.endPoint, {
-    //     query: mutation,
-    //     variables: { createStudent: createStudent }
-    // }).then((response) => {
-    //     console.log(response.status, "RESPONSE");
-    // }, (error) => {
-    //     console.log(error);
-    // });
-    // console.log(res, "RES")
-    // return res;
   }
 
   async getAllStudents(): Promise<Student[]> {

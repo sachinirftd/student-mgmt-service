@@ -9,7 +9,7 @@ export class UpdateStudentInput {
     @Field()
     name: string;
     @Field()
-    age: number;
+    age?: number;
     @Field()
     dob: Date;
     @Field()
