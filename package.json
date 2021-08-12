@@ -21,10 +21,12 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@apollo/federation": "^0.29.0",
     "@graphile-contrib/pg-simplify-inflector": "^6.1.0",
     "@nestjs/axios": "0.0.1",
     "@nestjs/bull": "^0.4.0",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^1.0.1",
     "@nestjs/core": "^8.0.0",
     "@nestjs/graphql": "^8.0.2",
     "@nestjs/platform-express": "^8.0.0",
@@ -42,7 +44,9 @@
     "graphql-request": "^3.5.0",
     "graphql-tools": "^8.0.0",
     "graphql-upload": "^12.0.0",
+    "install": "^0.13.0",
     "node-xlsx": "^0.17.1",
+    "npm": "^7.20.5",
     "postgraphile": "^4.12.3",
     "read-excel-file": "^5.2.8",
     "reflect-metadata": "^0.1.13",

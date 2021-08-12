@@ -1,17 +1,16 @@
-import { Processor, Process, OnGlobalQueueCompleted, InjectQueue, OnQueueCompleted, OnQueueFailed, OnQueueError } from "@nestjs/bull";
+import { Processor, Process, InjectQueue, OnQueueCompleted, OnQueueFailed, OnQueueError } from "@nestjs/bull";
 import { Job, Queue } from "bull";
-import { Student } from "src/student/entity/student.entity";
+import { Student } from "./entity/student.entity";
 const excelToJson = require('convert-excel-to-json');
 const xlsxFile = require('read-excel-file/node');
 const XLSX = require('xlsx');
 import { request } from "graphql-request";
 import * as socketClusterClient from 'socketcluster-client';
-import { Logger } from "@nestjs/common";
 
 @Processor('file-upload-queue')
 export class UploadConsumer {
 
-    endPoint = 'http://localhost:5000/graphql';
+    endPoint = process.env.DB_CONNECTION;
     students: Student[] = [];
     stud: Student;
 
@@ -28,7 +27,6 @@ export class UploadConsumer {
 
     @Process('upload')
     async readOperationJob(job: Job<any>) {
-        console.log("Job Received:  ", job.id);
         let insertedStudents: Student[] = [];
         this.students = [];
 
@@ -51,28 +49,30 @@ export class UploadConsumer {
                 // return obj;
             });
         });
-       const returnResult = this.students.map(student => {
-            const mutation = `mutation CreateStudent($createStudent: StudentInput!){
-                createStudent(input: {student: $createStudent}){
-             
-                      __typename
-                     
+
+            const mutation = `mutation StudentBulkUpload($students: [StudentInput!]!) {
+              createBulkUpload(input: {students: $students}) {
+                students {
+                  age
+                  dob
+                  email
+                  id
+                  name
                 }
+              }
             }`
 
             return request(this.endPoint, mutation, {
-                createStudent: student
+              students: this.students
             }).then((data) => {
-              console.log(data, "DATA")
                 // insertedStudents.push(data.createStudent.student)
                 return true;
             }, (error) => {
-              console.log(error, "ERROR")
                 // () => error;
             });
-        }
-        );
-        return returnResult;
+        // }
+        // );
+        // return returnResult;
     }
 
     @OnQueueCompleted()

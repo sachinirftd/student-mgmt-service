@@ -1,8 +1,7 @@
 
 import { Injectable } from '@nestjs/common';
-import { Student } from 'src/student/entity/student.entity';
+import { Student } from './entity/student.entity';
 const xlsxFile = require('read-excel-file/node');
-import { request } from "graphql-request";
 import { createWriteStream } from 'fs';
 import { InjectQueue } from '@nestjs/bull';
 import { Queue } from 'bull';
@@ -10,7 +9,7 @@ import { Queue } from 'bull';
 @Injectable()
 export class UploadService {
 
-    endPoint = 'http://localhost:5000/graphql';
+    endPoint = process.env.DB_CONNECTION;
     students: Student[] = [];
     stud: Student;
 
@@ -22,15 +21,12 @@ export class UploadService {
             await createReadStream()
                 .pipe(createWriteStream(`./uploads/${filename}`))
                 .on('finish', async () => {
-                    const job = await this.fileUploadQueue.add('upload', {
+                     await this.fileUploadQueue.add('upload', {
                         filename
                     });
                     resolve(true);
                 })
                 .on('error', () => reject(false))
-                
         );
-
     }
-
 }

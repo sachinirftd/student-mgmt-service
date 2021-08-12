@@ -2,49 +2,18 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Student {
-  id: Float!
-  name: String!
-  age: Int
-  dob: String!
-  email: String!
-}
+directive @key(fields: String!) on OBJECT | INTERFACE
 
-type Query {
-  user: [Student]
-  sayHello: String!
-}
+directive @extends on OBJECT | INTERFACE
+
+directive @external on OBJECT | FIELD_DEFINITION
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+directive @provides(fields: String!) on FIELD_DEFINITION
 
 type Mutation {
-  saveStudent(createStudentInput: CreateStudentInput!): Student!
-  updateStudent(updateStudentInput: UpdateStudentInput!): Student!
-  deleteStudent(deleteStudentInput: DeleteStudentInput!): Float!
   uploadFile(file: Upload!): Boolean!
-}
-
-input CreateStudentInput {
-  id: Float!
-  name: String!
-  age: Float!
-  dob: DateTime!
-  email: String!
-}
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
-
-input UpdateStudentInput {
-  id: Float!
-  name: String!
-  age: Float!
-  dob: DateTime!
-  email: String!
-}
-
-input DeleteStudentInput {
-  id: Float!
 }
 
 """The `Upload` scalar type represents a file upload."""

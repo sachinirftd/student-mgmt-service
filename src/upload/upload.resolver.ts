@@ -13,7 +13,6 @@ export class UploadResolver {
         createReadStream,
         filename
     }: FileUpload) {
-
         return this.uploadService.uploadFile(filename, createReadStream);
     }
 
@@ -58,8 +57,8 @@ export class UploadResolver {
         // return true;
     // }
 
-    @Query(() => String)
-    sayHello(): string {
-        return 'Hello World!';
-    }
+    // @Query(() => String)
+    // sayHello(): string {
+    //     return 'Hello World!';
+    // }
 }
